@@ -12,6 +12,9 @@ dotenv.config()
 app.use("/auth",authRouter)
 app.use('/summary',summaryRouter)
 app.use('/profile',profileRouter)
+app.use("/",(req,res)=>{
+    res.send("Welcome to BriefAi")
+})
 
 
 
