@@ -1,9 +1,9 @@
-import app from "./app.js"
+import app from "./src/app.js"
 import dotenv from "dotenv"
-import connectDB from "./config/db.js"
-import authRouter from "./routes/authRouter.js"
-import summaryRouter from "./routes/summaryRouter.js"
-import profileRouter from "./routes/profileRouter.js"
+import connectDB from "./src/config/db.js"
+import authRouter from "./src/routes/authRouter.js"
+import summaryRouter from "./src/routes/summaryRouter.js"
+import profileRouter from "./src/routes/profileRouter.js"
 dotenv.config()
 
 
@@ -12,11 +12,11 @@ dotenv.config()
 app.use("/auth",authRouter)
 app.use('/summary',summaryRouter)
 app.use('/profile',profileRouter)
-app.use("/",(req,res)=>{
-    res.send("Welcome to BriefAi")
-})
 
 
+app.get("/", (req, res) => {
+  res.send("Welcome to BriefAi");
+});
 
 
 
