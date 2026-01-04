@@ -6,7 +6,7 @@ const app = express()
 
 app.use(cors(
     {
-        origin: "https://brief-frontend.vercel.app/",
+        origin: "https://brief-frontend.vercel.app",
         credentials: true
     }
 ))
