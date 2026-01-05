@@ -34,6 +34,7 @@ const verificationSchema = new Schema({
     }
   }
 );
+verificationSchema.index({ email: 1, code: 1 });
 
 const Verification = mongoose.model("EmailOtp", verificationSchema);
 export default Verification;
