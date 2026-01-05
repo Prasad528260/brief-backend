@@ -7,4 +7,5 @@ const profileRouter = express.Router();
 profileRouter.get("/get-profile", userAuth, getProfile);
 profileRouter.put("/update-name", userAuth, updateName);
 
+
 export default profileRouter;
