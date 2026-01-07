@@ -41,7 +41,7 @@ export const fileUploadController = async (req, res) => {
     }
     if (user.token <= 0) {
       console.log("ERROR : TOKEN LIMIT EXCEEDED");
-      return res.status(400).json({ message: "Token limit exceeded" });
+      return res.status(400).json({ message: "Token limit exceeded. Please upgrade your plan." });
     }
     if (!req.file) {
       console.log("ERROR : PLEASE UPLOAD A FILE");
