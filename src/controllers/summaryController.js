@@ -1,5 +1,6 @@
 import { generateStructuredSummary } from "../ai/summary.js";
 import Summary from "../models/Summary.js";
+import User from "../models/User.js";
 // import { getTopics } from "../ai/summary.js";
 
 function parseLabeledSummary(text) {
@@ -37,6 +38,10 @@ export const fileUploadController = async (req, res) => {
     if (!user) {
       console.log("ERROR : USER NOT FOUND");
       return res.status(400).json({ message: "User not found" });
+    }
+    if (user.token <= 0) {
+      console.log("ERROR : TOKEN LIMIT EXCEEDED");
+      return res.status(400).json({ message: "Token limit exceeded" });
     }
     if (!req.file) {
       console.log("ERROR : PLEASE UPLOAD A FILE");
@@ -107,6 +112,7 @@ export const fileUploadController = async (req, res) => {
       title: aiResponse.title,
       summary: aiResponse.summary,
     });
+    await User.findByIdAndUpdate(user._id, { token: user.token - 1 });
 
     return res.status(200).json({
       data: aiResponse,

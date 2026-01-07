@@ -32,6 +32,10 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    token : {
+      type: Number,
+      default: 3,
+    }
   },
   {
     timestamps: true,
