@@ -1,5 +1,5 @@
 import { PLAN_LIMITS, checkUsageLimit } from "./models.js"
-import { generateWithGroq } from "./summaryGenerator.js";
+import { generateGroqSummary } from "./summaryGenerator.js";
 import { generateWithGemini } from "./summaryGenerator.js";
 
 export async function generateSummaryForUser({ text, user }) {

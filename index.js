@@ -4,14 +4,15 @@ import connectDB from "./src/config/db.js"
 import authRouter from "./src/routes/authRouter.js"
 import summaryRouter from "./src/routes/summaryRouter.js"
 import profileRouter from "./src/routes/profileRouter.js"
+import paymentRouter from "./src/routes/paymentRouter.js"
 dotenv.config()
-
 
 
 // Routes
 app.use("/auth",authRouter)
 app.use('/summary',summaryRouter)
 app.use('/profile',profileRouter)
+app.use('/payment',paymentRouter)
 
 
 app.get("/", (req, res) => {
