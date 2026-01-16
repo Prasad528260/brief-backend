@@ -34,7 +34,7 @@ FIELD RULES:
   - Meaningful, generic, no names
 
 - overview:
-  - A well-explained paragraph (5–7 full sentences)
+  - A well-explained paragraph (7–10 full sentences)
   - Should clearly explain what the conversation was about, why it happened, and key outcomes
   - Do NOT keep it too short
 

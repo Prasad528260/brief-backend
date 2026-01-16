@@ -1,4 +1,4 @@
-import { generateStructuredSummary } from "../ai/summary.js";
+import { generateSummaryForUser } from "../ai/summary.js";
 import Summary from "../models/Summary.js";
 import User from "../models/User.js";
 // import { getTopics } from "../ai/summary.js";
@@ -39,10 +39,7 @@ export const fileUploadController = async (req, res) => {
       console.log("ERROR : USER NOT FOUND");
       return res.status(400).json({ message: "User not found" });
     }
-    if (user.token <= 0) {
-      console.log("ERROR : TOKEN LIMIT EXCEEDED");
-      return res.status(400).json({ message: "Token limit exceeded. Please upgrade your plan." });
-    }
+    
     if (!req.file) {
       console.log("ERROR : PLEASE UPLOAD A FILE");
       return res.status(400).json({ message: "Please upload a file" });
@@ -98,7 +95,7 @@ export const fileUploadController = async (req, res) => {
     const summaryText = filteredMessages.join("\n");
     // console.log("Chars sent to AI:", summaryText.length);
 
-    const aiResponse = await generateStructuredSummary(summaryText);
+    const aiResponse = await generateSummaryForUser({text:summaryText,user:user});
     // console.log("AI RESPONSE:", aiResponse);
     // const summaryTopics =await getTopics(aiResponse);
     // console.log("Summary Topics:", summaryTopics);

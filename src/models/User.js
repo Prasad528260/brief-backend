@@ -8,6 +8,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    
     email: {
         type:String,
         required:true,
@@ -32,10 +33,17 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    token : {
+    plan : {
+      type: String,
+      enum : ["free","premium"],
+      default: "free",
+    },
+    summariesUsed: {
       type: Number,
-      default: 3,
-    }
+      default: 0,
+    },
+    
+    
   },
   {
     timestamps: true,
