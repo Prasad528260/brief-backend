@@ -1,34 +1,6 @@
 import { generateSummaryForUser } from "../ai/summary.js";
 import Summary from "../models/Summary.js";
 import User from "../models/User.js";
-// import { getTopics } from "../ai/summary.js";
-
-function parseLabeledSummary(text) {
-  if (!text || typeof text !== "string") {
-    return {
-      overview: "Summary could not be generated.",
-      topics: [],
-    };
-  }
-
-  const summaryMatch = text.match(/SUMMARY:\s*([\s\S]*?)\n\s*TOPICS:/i);
-  const topicsMatch = text.match(/TOPICS:\s*([\s\S]*)/i);
-
-  const overview = summaryMatch
-    ? summaryMatch[1].trim()
-    : "Summary could not be generated.";
-
-  let topics = [];
-  if (topicsMatch) {
-    topics = topicsMatch[1]
-      .split("\n")
-      .map((t) => t.replace(/^[-•]\s*/, "").trim())
-      .filter(Boolean)
-      .slice(0, 3);
-  }
-
-  return { overview, topics };
-}
 
 export const fileUploadController = async (req, res) => {
   try {
