@@ -11,13 +11,18 @@ export const fileUploadController = async (req, res) => {
       console.log("ERROR : USER NOT FOUND");
       return res.status(400).json({ message: "User not found" });
     }
-    
+
     if (!req.file) {
       console.log("ERROR : PLEASE UPLOAD A FILE");
       return res.status(400).json({ message: "Please upload a file" });
     }
     const file = req.file;
-    const { startDate, endDate } = req.body;
+    const { startDate, endDate, model } = req.body;
+    const allowedModels = ["groq", "openai"];
+
+    if (!model || !allowedModels.includes(model)) {
+      return res.status(400).json({ message: "Invalid model selected" });
+    }
 
     const text = file.buffer.toString("utf-8");
 
@@ -67,7 +72,11 @@ export const fileUploadController = async (req, res) => {
     const summaryText = filteredMessages.join("\n");
     // console.log("Chars sent to AI:", summaryText.length);
 
-    const aiResponse = await generateSummaryForUser({text:summaryText,user:user});
+    const aiResponse = await generateSummaryForUser({
+      text: summaryText,
+      user: user,
+      model: model,
+    });
     // console.log("AI RESPONSE:", aiResponse);
     // const summaryTopics =await getTopics(aiResponse);
     // console.log("Summary Topics:", summaryTopics);

@@ -1,23 +1,22 @@
 export const PLAN_LIMITS = {
   free: {
-    maxSummaries: 3,
-    model: "groq-3.1-8b-instant",
+    groq: 3,
+    openai: 0, // blocked
   },
   premium: {
-    maxSummaries: 10,
-    model: "gemini-2.0-flash",
+    groq: 10,
+    openai: 10,
   },
 };
-export function checkUsageLimit(user) {
-  const limit = PLAN_LIMITS[user.plan].maxSummaries;
+export function checkUsageLimit(user, model) {
+  const limit = PLAN_LIMITS[user.plan][model];
 
-  if (user.summariesUsed >= limit) {
-    if (user.plan === "free") {
-      throw new Error("Free plan limit exceeded");
-    } else {
-      throw new Error("Premium plan limit exceeded");
-    }
+  if (limit === 0) {
+    throw new Error("Model not allowed for your plan");
+  }
+
+  if (user.usage[model] >= limit) {
+    throw new Error("Usage limit reached for this model");
   }
 }
-
 

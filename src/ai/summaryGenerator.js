@@ -34,17 +34,32 @@ export async function generateGroqSummary(text) {
   }
 }
 
+import OpenAI from "openai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-export async function generateWithGemini(text) {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+const MAX_CHARS = 12000;
+
+export async function generateWithOpenAI(text) {
+  if (text.length > MAX_CHARS) {
+    throw new Error("Input text too long");
+  }
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "user",
+        content: summaryPrompt(text),
+      },
+    ],
+    temperature: 0.2,
+    max_tokens: 800,
   });
 
-  const response = await model.generateContent(summaryPrompt(text));
-
-  const raw = response.response.text().trim();
+  const raw = response.choices[0].message.content.trim();
 
   try {
     return JSON.parse(raw);
