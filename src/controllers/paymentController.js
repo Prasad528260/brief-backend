@@ -17,7 +17,7 @@ export const createPayment = async (req, res) => {
         name: user.name,
       },
     });
-    console.log(order);
+    // console.log(order);
     const payment = await Payment.create({
       orderId: order.id,
       userId: user._id,
@@ -56,7 +56,7 @@ export const verifyPayment = async (req, res) => {
 
     // UPDATE PAYMENT STATUS
     const paymentdetails = req.body.payload.payment.entity;
-    console.log("paymentdetails : ", paymentdetails);
+    // console.log("paymentdetails : ", paymentdetails);
     const payment = await Payment.findOne({ orderId: paymentdetails.order_id });
     payment.status = paymentdetails.status;
     await payment.save();
@@ -79,6 +79,26 @@ export const verifyPayment = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Payment verification failed" + error.message,
+    });
+  }
+};
+
+
+export const verifyPremium = async (req, res) => {
+  try {
+    const user = req.user;
+    if (user.plan === "premium") {
+      return res.status(200).json({
+        message: "Premium verified successfully",
+        data: user,
+      });
+    }
+    return res.status(400).json({
+      message: "Premium not verified",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Premium verification failed" + error.message,
     });
   }
 };
