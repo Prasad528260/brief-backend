@@ -53,8 +53,10 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
+
     // UPDATE PAYMENT STATUS
     const paymentdetails = req.body.payload.payment.entity;
+    console.log("paymentdetails : ", paymentdetails);
     const payment = await Payment.findOne({ orderId: paymentdetails.order_id });
     payment.status = paymentdetails.status;
     await payment.save();
@@ -64,12 +66,12 @@ export const verifyPayment = async (req, res) => {
     await user.save();
 
 
-    if(req.body.event === "payment.captured"){
-      // Update payment status
-    }
-    if(req.body.event === "payment.failed"){
-      // Update payment status
-    }
+    // if(req.body.event === "payment.captured"){
+    //   // Update payment status
+    // }
+    // if(req.body.event === "payment.failed"){
+    //   // Update payment status
+    // }
 
     return res.status(200).json({
       message: "Payment verification successful",
